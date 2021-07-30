@@ -9,7 +9,10 @@ router.get('/', (req, res) => {
     include: {all: true, nested: true,}
   }).then((products) => {
     res.status(200).json(products);
-  })
+  }) .catch((err) => {
+    // console.log(err);
+    res.status(400).json(err);
+  });
   // find all products
   // be sure to include its associated Category and Tag data
 });
@@ -21,7 +24,10 @@ router.get('/:id', (req, res) => {
     include: {all: true, nested: true,}
   }).then((products) => {
     res.status(200).json(products);
-  })
+  }) .catch((err) => {
+    // console.log(err);
+    res.status(400).json(err);
+  });
   // find a single product by its `id`
   // be sure to include its associated Category and Tag data
 });
@@ -102,6 +108,14 @@ router.put('/:id', (req, res) => {
 
 router.delete('/:id', (req, res) => {
   // delete one product by its `id` value
+  Product.destroy({
+    where: {id: req.params.id},
+  }).then((products) => {
+    res.status(200).end();
+  }) .catch((err) => {
+    // console.log(err);
+    res.status(400).json(err);
+  });
 });
 
 module.exports = router;
